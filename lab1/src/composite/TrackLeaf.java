@@ -5,8 +5,7 @@ import model.Track;
 import java.util.List;
 
 public class TrackLeaf implements MusicComponent {
-
-    private Track track;
+    private final Track track;
 
     public TrackLeaf(Track track) {
         this.track = track;
@@ -18,22 +17,13 @@ public class TrackLeaf implements MusicComponent {
     }
 
     @Override
-    public List<Track> getTracks() {
-        return List.of(track);
-    }
-
-    @Override
     public void showStructure(String indent) {
-
-        System.out.println(
-                indent +
-                        "Трек: " +
-                        track.getTitle()
-        );
+        System.out.println(indent + "Трек: " + track.getTitle());
     }
 
     @Override
-    public Playlist findPlaylist(String name) {
-        return null;
+    public void collectTracks(List<Track> trackList) {
+        trackList.add(this.track);
     }
 }
+

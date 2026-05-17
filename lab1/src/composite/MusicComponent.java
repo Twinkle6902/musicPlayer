@@ -1,12 +1,16 @@
 package composite;
 
 import model.Track;
-
 import java.util.List;
 
 public interface MusicComponent {
     void play();
-    List<Track> getTracks();
     void showStructure(String indent);
-    Playlist findPlaylist(String name);
+
+    default void collectTracks(List<Track> trackList) {}
+
+
+    default Playlist findPlaylist(String name) {
+        return null;
+    }
 }

@@ -2,15 +2,12 @@ package composite;
 
 import model.Track;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Playlist implements MusicComponent {
-
     private String name;
-
-    private List<MusicComponent> components =
-            new ArrayList<>();
+    private List<MusicComponent> components = new ArrayList<>();
 
     public Playlist(String name) {
         this.name = name;
@@ -22,58 +19,45 @@ public class Playlist implements MusicComponent {
 
     @Override
     public void play() {
-
+        System.out.println("Плейлист: " + name + " ");
         for (MusicComponent c : components) {
             c.play();
         }
     }
 
+    public List<Track> getAllTracks() {
+        List<Track> allTracks = new ArrayList<>();
+        collectTracks(allTracks);
+        return allTracks;
+    }
+
     @Override
-    public List<Track> getTracks() {
-
-        List<Track> result = new ArrayList<>();
-
+    public void collectTracks(List<Track> trackList) {
         for (MusicComponent c : components) {
-            result.addAll(c.getTracks());
+            c.collectTracks(trackList);
         }
-
-        return result;
     }
 
     @Override
     public void showStructure(String indent) {
-
-        System.out.println(
-                indent +
-                        "Плейлист: " +
-                        name
-        );
-
-        for (MusicComponent component : components) {
-
-            component.showStructure(
-                    indent + "   "
-            );
+        System.out.println(indent + "Плейлист: " + name);
+        for (MusicComponent c : components) {
+            c.showStructure(indent + "   ");
         }
     }
 
     @Override
     public Playlist findPlaylist(String name) {
-
-        if (this.name.equals(name)) {
+        if (this.name.equalsIgnoreCase(name)) {
             return this;
         }
 
-        for (MusicComponent component : components) {
-
-            Playlist found =
-                    component.findPlaylist(name);
-
+        for (MusicComponent c : components) {
+            Playlist found = c.findPlaylist(name);
             if (found != null) {
                 return found;
             }
         }
-
         return null;
     }
 }
